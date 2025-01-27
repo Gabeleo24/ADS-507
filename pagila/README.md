@@ -50,10 +50,12 @@ This project is focused on developing a production-ready data pipeline using SQL
 /project-root
 │
 ├── data/                  # Input datasets
+│   └── pagila-data.sql
 ├── docs/                  # Documentation files
 ├── sql/                   # SQL scripts for schema and transformations
 │   ├── pagila-schema.sql
-│   └── pagila-data.sql
+│   └── pagila-schema-jsonb.sql
+│   └── pagila-insert-data.sql
 ├── src/                   # Source code for ETL pipeline
 │   └── pipeline.py
 ├── tests/                 # Unit tests for pipeline
