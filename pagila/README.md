@@ -1,4 +1,4 @@
-# [Project Name]
+# 	MySQL Pipline
 
 ## Overview
 
@@ -21,7 +21,7 @@ This project is focused on developing a production-ready data pipeline using SQL
 
 1. **Clone the Repository**
     ```sh
-    git clone [repository_url]
+    git clone [https://github.com/Gabeleo24/ADS-507/tree/main/pagila]
     cd [repository_folder]
     ```
 
@@ -95,7 +95,8 @@ This project is focused on developing a production-ready data pipeline using SQL
 This project is licensed under the MIT License.
 
 ## Contributors
-- Contributor 1 Name
-- Contributor 2 Name
+- Contributor 1: Duy Nguyen 
+- Contributor 2 : Jorge Roldan
+
 
 Let me know if you’d like any modifications or additional sections!
