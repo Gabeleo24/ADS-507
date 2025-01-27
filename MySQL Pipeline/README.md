@@ -1,15 +1,34 @@
-# 	MySQL Pipline
+# MySQL Pipeline
 
 ## Overview
 
-This project is focused on developing a production-ready data pipeline using SQL and MySQL database tools. The primary objective is to implement an ETL (Extract, Transform, Load) or ELT (Extract, Load, Transform) pipeline to process a selected dataset and produce actionable outputs, such as triggered emails or dashboards.
+This project focuses on developing a production-ready data pipeline using SQL and MySQL database tools, with the AdventureWorks database as the core data source. The primary objective is to implement an ETL (Extract, Transform, Load) or ELT (Extract, Load, Transform) pipeline to process key datasets from AdventureWorks and produce actionable outputs, such as business analytics dashboards or triggered reports.
+
+## Key Datasets
+
+For this project, we will focus on the following five datasets from the AdventureWorks database:
+1. **SalesOrderHeader**
+    - Contains information about customer orders, including order dates, due dates, and totals.
+    - Use Case: Aggregate sales performance metrics over time and regions.
+2. **SalesOrderDetail**
+    - Provides detailed line-item information for each order, such as quantity and product IDs.
+    - Use Case: Analyze product-level sales trends and identify best-selling items.
+3. **Customer**
+    - Contains customer demographic information, including geographic location and company affiliation.
+    - Use Case: Segment customers by demographics and purchase behavior.
+4. **Product**
+    - Includes data on products sold, including product names, categories, and standard costs.
+    - Use Case: Generate insights into product profitability and category performance.
+5. **Employee**
+    - Contains employee details, including titles, department assignments, and hire dates.
+    - Use Case: Analyze sales performance by employee and identify top-performing sales staff.
 
 ## Features
-- Database: MySQL database setup for data storage and transformations.
-- Pipeline: Fully reproducible ETL/ELT pipeline to ingest, process, and store data.
-- SQL Transformations: Use of SQL for data cleaning, aggregation, and querying.
-- Output: Outputs include data visualizations, notifications, or API integrations.
-- Version Control: Collaborative development via GitHub with version control.
+- **Database:** MySQL database setup for data storage and transformations.
+- **Pipeline:** Fully reproducible ETL/ELT pipeline to ingest, process, and store data.
+- **SQL Transformations:** Use of SQL for data cleaning, aggregation, and querying.
+- **Output:** Outputs include data visualizations, notifications, or API integrations.
+- **Version Control:** Collaborative development via GitHub with version control.
 
 ## Requirements
 - MySQL Server (version 8.0 or later)
@@ -21,8 +40,7 @@ This project is focused on developing a production-ready data pipeline using SQL
 
 1. **Clone the Repository**
     ```sh
-    git clone [https://github.com/Gabeleo24/ADS-507/tree/main/pagila]
-    cd [repository_folder]
+    git clone https://github.com/Gabeleo24/ADS-507/tree/main/MySQL%20Pipeline
     ```
 
 2. **Set Up the MySQL Database**
@@ -53,9 +71,9 @@ This project is focused on developing a production-ready data pipeline using SQL
 │   └── pagila-data.sql
 ├── docs/                  # Documentation files
 ├── sql/                   # SQL scripts for schema and transformations
-│   ├── pagila-schema.sql
-│   └── pagila-schema-jsonb.sql
-│   └── pagila-insert-data.sql
+│   ├── create-adventureworks.sql
+│   ├── insert-data.sql
+│   ├── transformations.sql
 ├── src/                   # Source code for ETL pipeline
 │   └── pipeline.py
 ├── tests/                 # Unit tests for pipeline
@@ -98,7 +116,6 @@ This project is licensed under the MIT License.
 
 ## Contributors
 - Contributor 1: Duy Nguyen 
-- Contributor 2 : Jorge Roldan
-
+- Contributor 2: Jorge Roldan
 
 Let me know if you’d like any modifications or additional sections!
