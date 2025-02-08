@@ -133,3 +133,57 @@ CREATE TABLE WorkOrderRouting (
       FOREIGN KEY (WorkOrderID) REFERENCES WorkOrder(WorkOrderID)
       ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
+
+-- ====================================================
+-- Data Loading Commands
+-- ====================================================
+-- Note: The CSV files are stored in the 'data/' folder,
+-- are tab-delimited (\t), and include a header row (which is ignored).
+
+-- 1. Load data into ProductCategory
+LOAD DATA LOCAL INFILE 'data/ProductCategory.csv'
+INTO TABLE ProductCategory
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(Name, Description);
+
+-- 2. Load data into ProductSubcategory
+LOAD DATA LOCAL INFILE 'data/ProductSubcategory.csv'
+INTO TABLE ProductSubcategory
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(ProductCategoryID, Name, Description);
+
+-- 3. Load data into Product
+LOAD DATA LOCAL INFILE 'data/Product.csv'
+INTO TABLE Product
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(ProductSubcategoryID, Name, ProductNumber, Color, StandardCost, ListPrice, SellStartDate, SellEndDate, DiscontinuedDate);
+
+-- 4. Load data into ProductInventory
+LOAD DATA LOCAL INFILE 'data/ProductInventory.csv'
+INTO TABLE ProductInventory
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(ProductID, Location, Shelf, Bin, Quantity);
+
+-- 5. Load data into WorkOrder
+LOAD DATA LOCAL INFILE 'data/WorkOrder.csv'
+INTO TABLE WorkOrder
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(ProductID, OrderQty, ScrappedQty, StartDate, EndDate, DueDate, ScrapReason);
+
+-- 6. Load data into WorkOrderRouting
+LOAD DATA LOCAL INFILE 'data/WorkOrderRouting.csv'
+INTO TABLE WorkOrderRouting
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(WorkOrderID, OperationSequence, Location, ScheduledStartDate, ScheduledEndDate, ActualStartDate, ActualEndDate, ActualResourceHrs, PlannedCost, ActualCost);

@@ -14,20 +14,11 @@ const connection = mysql.createConnection({
   }
 });
 
-// Now you can execute your query that uses LOAD DATA LOCAL INFILE
-connection.query(
-  `LOAD DATA LOCAL INFILE '/Users/home/Documents/GitHub/ADS-507/Repo/MySQL Pipeline/data/PurchaseOrderHeader.csv'
-   INTO TABLE SalesOrderHeader
-   FIELDS TERMINATED BY ',' 
-   OPTIONALLY ENCLOSED BY '"'
-   LINES TERMINATED BY '\n'
-   IGNORE 1 ROWS;`,
-  (error, results, fields) => {
-    if (error) {
-      console.error('Error loading data:', error);
-      return;
-    }
-    console.log('Data loaded successfully:', results);
+// Test the connection (optional)
+connection.connect(err => {
+  if (err) {
+    console.error('Connection error:', err);
+    return;
   }
-);
-
+  console.log('Connected to MySQL server.');
+});
