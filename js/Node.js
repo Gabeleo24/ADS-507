@@ -5,7 +5,7 @@ const connection = mysql.createConnection({
   host: 'team-shared-mysql.cjwa24wuisi8.us-east-1.rds.amazonaws.com',
   user: 'Ads507',
   password: 'Gabrielleo24',
-  database: 'my_pipelineADS507_5',
+  database: 'production',
   localInfile: true,
   streamFactory: (filePath) => {
     // This function is called when a LOCAL INFILE command is issued.
