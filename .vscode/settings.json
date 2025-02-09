@@ -9,9 +9,9 @@
             "server": "team-shared-mysql.cjwa24wuisi8.us-east-1.rds.amazonaws.com",
             "port": 3306,
             "driver": "MySQL",
-            "username": "Ads507",
-            "database": "my_pipelineADS507_5",
-            "name": "ADS507_5"
+            "name": "Sales",
+            "database": "Sales",
+            "username": "Ads507"
         }
     ]
 }
