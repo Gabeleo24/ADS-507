@@ -6,7 +6,7 @@ const connection = mysql.createConnection({
   host: 'team-shared-mysql.cjwa24wuisi8.us-east-1.rds.amazonaws.com',
   user: 'Ads507',
   password: 'Gabrielleo24',
-  database: 'production',
+  database: 'Sales',
   localInfile: true,
   // The streamFactory option returns a readable stream for the file path provided by the driver
   streamFactory: (filePath) => {
@@ -15,6 +15,32 @@ const connection = mysql.createConnection({
   }
 });
 
+const configUserA = {
+  host: 'team-shared-mysql.cjwa24wuisi8.us-east-1.rds.amazonaws.com',
+  user: 'PipelineUser1',
+  password: 'StrongPassword1!',
+  database: 'Sales',
+  localInfile: true
+};
+
+const configUserB = {
+  host: 'team-shared-mysql.cjwa24wuisi8.us-east-1.rds.amazonaws.com',
+  user: 'PipelineUser2',
+  password: 'StrongPassword2!',
+  database: 'Sales',
+  localInfile: true
+};
+
+
+// Pick which user config to use, for example an environment variable:
+const chosenConfig = process.env.DB_USER === 'Ads507' ? configUserA : configUserB;
+
+const connection = mysql.createConnection({
+  ...chosenConfig,
+  streamFactory: (filePath) => {
+    console.log(`Attempting to read file at: ${filePath}`);
+    return fs.createReadStream(filePath);
+  }
 // Connect to the MySQL server
 connection.connect((err) => {
   if (err) {
