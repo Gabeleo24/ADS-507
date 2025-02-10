@@ -1,20 +1,7 @@
 const fs = require('fs');
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 
-// Create a connection to the MySQL server with localInfile enabled
-const connection = mysql.createConnection({
-  host: 'team-shared-mysql.cjwa24wuisi8.us-east-1.rds.amazonaws.com',
-  user: 'Ads507',
-  password: 'Gabrielleo24',
-  database: 'Sales',
-  localInfile: true,
-  // The streamFactory option returns a readable stream for the file path provided by the driver
-  streamFactory: (filePath) => {
-    console.log(`Attempting to read file at: ${filePath}`);
-    return fs.createReadStream(filePath);
-  }
-});
-
+// Define configuration objects for each user
 const configUserA = {
   host: 'team-shared-mysql.cjwa24wuisi8.us-east-1.rds.amazonaws.com',
   user: 'PipelineUser1',
@@ -31,58 +18,74 @@ const configUserB = {
   localInfile: true
 };
 
+const configUserC = {
+  host: 'team-shared-mysql.cjwa24wuisi8.us-east-1.rds.amazonaws.com',
+  user: 'PipelineUser3',
+  password: 'StrongPassword3!',
+  database: 'Sales',
+  localInfile: true
+};
 
-// Pick which user config to use, for example an environment variable:
-const chosenConfig = process.env.DB_USER === 'Ads507' ? configUserA : configUserB;
+// Select the configuration based on an environment variable (DB_USER)
+let chosenConfig;
+switch (process.env.DB_USER) {
+  case 'PipelineUser1':
+    chosenConfig = configUserA;
+    break;
+  case 'PipelineUser2':
+    chosenConfig = configUserB;
+    break;
+  case 'PipelineUser3':
+    chosenConfig = configUserC;
+    break;
+  default:
+    // Default to PipelineUser1 if no valid environment variable is provided
+    chosenConfig = configUserA;
+    break;
+}
 
-const connection = mysql.createConnection({
+// Create a connection pool using the chosen configuration
+const pool = mysql.createPool({
   ...chosenConfig,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+  // Using streamFactory for local file access if needed
   streamFactory: (filePath) => {
     console.log(`Attempting to read file at: ${filePath}`);
     return fs.createReadStream(filePath);
   }
-// Connect to the MySQL server
-connection.connect((err) => {
-  if (err) {
-    console.error('Connection error:', err);
-    process.exit(1);
-  }
-  console.log('Connected to MySQL server.');
-  
-  // SQL query to load data from the CSV file into the ProductCategory table
-  const loadQuery = `
-    LOAD DATA LOCAL INFILE '/Users/home/Downloads/ProductCategory.csv'
-    INTO TABLE ProductCategory
-    FIELDS TERMINATED BY '\t'
-    LINES TERMINATED BY '\n'
-    IGNORE 1 LINES
-    (Name, Description);
-  `;
-  
-  // Execute the LOAD DATA query
-  connection.query(loadQuery, (error, results) => {
-    if (error) {
-      console.error('Error executing LOAD DATA query:', error);
-    } else {
-      console.log('Data loaded successfully. Results:', results);
-    }
-    
-    // Optionally, run a SELECT query to verify the data was inserted:
-    connection.query('SELECT * FROM ProductCategory LIMIT 5;', (selectErr, selectResults) => {
-      if (selectErr) {
-        console.error('Error executing SELECT query:', selectErr);
-      } else {
-        console.log('Sample data from ProductCategory:', selectResults);
-      }
-      
-      // Close the connection
-      connection.end((endErr) => {
-        if (endErr) {
-          console.error('Error closing the connection:', endErr);
-        } else {
-          console.log('Connection closed.');
-        }
-      });
-    });
-  });
 });
+
+// Example function to perform a query using the pool
+async function runQuery() {
+  let connection;
+  try {
+    connection = await pool.getConnection();
+    console.log('Connected to MySQL server.');
+    
+    // Example query: Load data from a CSV file into the ProductCategory table
+    const loadQuery = `
+      LOAD DATA LOCAL INFILE '/Users/home/Downloads/ProductCategory.csv'
+      INTO TABLE ProductCategory
+      FIELDS TERMINATED BY '\t'
+      LINES TERMINATED BY '\n'
+      IGNORE 1 LINES
+      (Name, Description);
+    `;
+    const [results] = await connection.query(loadQuery);
+    console.log('Data loaded successfully. Results:', results);
+    
+    // Optionally, run a SELECT query to verify the data was inserted
+    const [selectResults] = await connection.query('SELECT * FROM ProductCategory LIMIT 5;');
+    console.log('Sample data from ProductCategory:', selectResults);
+    
+  } catch (error) {
+    console.error('Error during query execution:', error);
+  } finally {
+    if (connection) connection.release();
+  }
+}
+
+// Execute the example query
+runQuery();
