@@ -1,0 +1,11 @@
+TerritoryID,TerritoryName,CountryRegionCode,Geo_Group,CurrentYearSales,LastYearSales,SalesGrowth,YoYGrowthPercentage
+4,Southwest,US,North America,10510853.87,5366575.71,5144278.16,95.86
+1,Northwest,US,North America,7887186.79,3298694.49,4588492.3,139.1
+6,Canada,CA,North America,6771829.14,5693988.86,1077840.28,18.93
+9,Australia,AU,Pacific,5977814.92,2278548.98,3699265.94,162.35
+10,United Kingdom,GB,Europe,5012905.37,1635823.4,3377081.97,206.45
+7,France,FR,Europe,4772398.31,2396539.76,2375858.55,99.14
+8,Germany,DE,Europe,3805202.35,1307949.79,2497252.56,190.93
+3,Central,US,North America,3072175.12,3205014.08,-132838.96,-4.14
+5,Southeast,US,North America,2538667.25,3925071.43,-1386404.18,-35.32
+2,Northeast,US,North America,2402176.85,3607148.94,-1204972.09,-33.41
