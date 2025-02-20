@@ -1,0 +1,11 @@
+SELECT
+    TerritoryID,
+    Name AS TerritoryName,
+    CountryRegionCode,
+    Geo_Group,
+    SalesYTD AS CurrentYearSales,
+    SalesLastYear AS LastYearSales,
+    (SalesYTD - SalesLastYear) AS SalesGrowth,
+    ROUND(((SalesYTD - SalesLastYear) / NULLIF(SalesLastYear, 0)) * 100, 2) AS YoYGrowthPercentage
+FROM AdventureSales.SalesTerritory
+ORDER BY SalesYTD DESC;
